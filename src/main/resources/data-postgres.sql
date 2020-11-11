@@ -1,0 +1,17 @@
+INSERT INTO category(name) VALUES ('development');
+INSERT INTO category(name) VALUES ('administration');
+INSERT INTO category(name) VALUES ('physical fitness');
+INSERT INTO task(name) VALUES('create service');
+INSERT INTO task(name) VALUES('create model');
+INSERT INTO task(name) VALUES('create view');
+INSERT INTO task(name) VALUES('end of month accounting');
+INSERT INTO task(name) VALUES('go biking');
+INSERT INTO task(name) VALUES('go swimming');
+INSERT INTO task(name) VALUES('lunch');
+INSERT INTO task(name) VALUES('dinner');
+INSERT INTO tasks_categories(task_id, category_id) VALUES (1, 1);
+INSERT INTO tasks_categories(task_id, category_id) VALUES (2, 1);
+INSERT INTO tasks_categories(task_id, category_id) VALUES (3, 1);
+INSERT INTO tasks_categories(task_id, category_id) VALUES (4, 2);
+INSERT INTO tasks_categories(task_id, category_id) VALUES (5, 3);
+INSERT INTO tasks_categories(task_id, category_id) VALUES (6, 3);
