@@ -20,14 +20,14 @@ public class TaskService implements ITaskService {
     }
 
     @Override
-    public List<Task> findCategory(Category category) {
+    public List<Task> findCategory(String category) {
 
         var allTasks = this.findAll();
 
         List<Task> tasks = new ArrayList<Task>();
 
         for (Task task : allTasks) {
-            if (task.hasCategory(category)) {
+            if (task.getCategory().equals(category)) {
                 tasks.add(task);
             }
         }
@@ -46,7 +46,9 @@ public class TaskService implements ITaskService {
         List<Task> allTasks = this.findAll();
 
         for (Task itTask : allTasks) {
-            if (itTask.getName().equals(task.getName())) {
+            if (itTask.getName().equals(task.getName()) &&
+                    itTask.getCategory().equals(task.getCategory()))
+            {
                 return;
             }
         }

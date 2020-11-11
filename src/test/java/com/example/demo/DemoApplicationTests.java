@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 
-import java.util.HashSet;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -27,15 +26,15 @@ class DemoApplicationTests {
     @Test
     @Sql ({"classpath:schema-postgres.sql", "classpath:data-postgres.sql"})
     void filteredList() {
-        List<Task> tasksDev = taskService.findCategory(new Category(0L, "development"));
-        List<Task> tasksAdmin = taskService.findCategory(new Category(0L, "administration"));
-        List<Task> tasksPhysical = taskService.findCategory(new Category(0L, "physical fitness"));
-        //List<Task> tasksNoCat = taskService.findCategory("");
+        List<Task> tasksDev = taskService.findCategory("development");
+        List<Task> tasksAdmin = taskService.findCategory("administration");
+        List<Task> tasksPhysical = taskService.findCategory("physical fitness");
+        List<Task> tasksNoCat = taskService.findCategory("");
 
         assertEquals(3, tasksDev.size(), "initial size must be 3");
         assertEquals(1, tasksAdmin.size(), "initial size must be 1");
         assertEquals(2, tasksPhysical.size(), "initial size must be 2");
-        //assertEquals(2, tasksNoCat.size(), "initial size must be 2");
+        assertEquals(2, tasksNoCat.size(), "initial size must be 2");
     }
 
     //@Test
@@ -59,6 +58,7 @@ class DemoApplicationTests {
 
         Task task = new Task();
         task.setName("eksisterer ikke fra før");
+        task.setCategory("tull");
         taskService.deleteTask(task);
 
         List<Task> reducedTasks = taskService.findAll();
@@ -87,11 +87,13 @@ class DemoApplicationTests {
         List<Task> initialTasks = taskService.findAll();
 
         //Task task = new Task();
-        Task task = new Task(9999L, "", new HashSet<Category>());
+        Task task = new Task(9999L, "", "");
         task.setName("eksisterer ikke fra før");
+        task.setCategory("tull");
 
         for (Task itTask : initialTasks) {
-            if (itTask.getName().equals(task.getName()))
+            if (itTask.getName().equals(task.getName()) &&
+                    itTask.getCategory().equals(task.getCategory()))
             {
                 assertTrue(false, "task already exists, test pre-condition not satisfied");
             }
